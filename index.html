@@ -59,6 +59,19 @@ body {
   justify-content: space-around;
   }
   .block2 {
+    flex: 1 0 8em;
+    border-radius: 1em;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: #AED6F1;
+    box-shadow: 3px 3px 2px 2px grey;
+  } 
+#show3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  }
+  .block3 {
     flex: 1 0 16em;
     border-radius: 1em;
     margin: 0.5em;
@@ -161,12 +174,14 @@ h2 {
     <div id="tabButton">
       <ul class="tabs">
         <li data-tab-target="#show" class="active tab">Temperature at Different Location</li>
-        <li data-tab-target="#show2" class="tab">9-day Weather Forecast</li>
+        <li data-tab-target="#show2" class="tab">Rainfall at Different Location</li>
+        <li data-tab-target="#show3" class="tab">9-day Weather Forecast</li>
       </ul>
     </div>
     <div id="tabContainer" class="tab-content">
       <div id="show" data-tab-content class="active"></div>
       <div id="show2" data-tab-content></div>
+      <div id="show3" data-tab-content></div>
     </div>
   </div>
   <script>
@@ -367,14 +382,24 @@ async function main() {
     view.append(elm); //add the block to Webpage
   }
 
-  //get the HTML <div> block to show 9 day forecast
+  //get the HTML <div> block to show rainfall at different location
   let view2 = document.getElementById("show2");
-  for (loc of fdata.weatherForecast) {  //iterate thru all temp data
+  for (loc of Odata.rainfall.data) {  //iterate thru all temp data
     let elm = document.createElement('div');
     elm.setAttribute('class', 'block2');
+    //add the cancel icon, location, and temperature
+    elm.innerHTML = "<img class='btn' src='cancel-24.ico'><h3><p>" + loc.place + "</p></h3>  <p>" + loc.max + " mm</p>";
+    view2.append(elm); //add the block to Webpage
+  }
+
+  //get the HTML <div> block to show 9 day forecast
+  let view3 = document.getElementById("show3");
+  for (loc of fdata.weatherForecast) {  //iterate thru all temp data
+    let elm = document.createElement('div');
+    elm.setAttribute('class', 'block3');
 		//add the cancel icon, logo and information
     elm.innerHTML = "<img class='btn' src='cancel-24.ico'><h2>" + loc.forecastDate + "<br>" + loc.week + "</h2> <p> <b>Wind: </b>" + loc.forecastWind + "</p> <p> <b>Weather: </b>" + loc.forecastWeather + "</p> <p>" + "<img src='thermometer-48.png' alt='Temperature Range:' title='Temperature Range:' >" + loc.forecastMintemp.value + "°C - " + loc.forecastMaxtemp.value + "°C </p> <p>" + "<img src='drop-48.png' alt='Relative Humidity Range:' title='Relative Humidity Range:' >" + loc.forecastMinrh.value + "% - " + loc.forecastMaxrh.value + "% </p> <p>";
-    view2.append(elm); //add the block to Webpage
+    view3.append(elm); //add the block to Webpage
   }
   
   //add event handler to each cross button
